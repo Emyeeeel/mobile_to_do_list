@@ -21,8 +21,8 @@ class TodoService {
 
   Future<void> deleteItem(int index) async {
     var box = await _box;
-
-    await box.delete(index);
+    var key = box.keyAt(index);
+    await box.delete(key);
   }
 
   Future<void> updateIsCompleted(int index, TodoItem todoItem) async {

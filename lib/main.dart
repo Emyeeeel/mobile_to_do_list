@@ -4,6 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:to_do_app/screens/main_screen.dart';
 import 'package:to_do_app/todo_item.dart';
+import 'package:to_do_app/todo_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +19,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final TodoService _todoService = TodoService();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +29,18 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(),
+      theme: ThemeData(
+        primaryColor: const Color(0xFFF2ECFF),
+      ),
+      home: FutureBuilder(
+        future: _todoService.getAllTodos(),
+        builder: (context, AsyncSnapshot<List<TodoItem>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MyHomePage(snapshot.data ?? []);
+          }
+          return const CircularProgressIndicator();
+        },
+      ),
     );
   }
 }
