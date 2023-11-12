@@ -17,7 +17,7 @@ class TodoItemAdapter extends TypeAdapter<TodoItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TodoItem(
-      title: fields[0] as String,
+      fields[0] as String,
       isCompleted: fields[1] == null ? false : fields[1] as bool,
     );
   }

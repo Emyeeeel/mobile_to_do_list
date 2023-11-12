@@ -5,7 +5,7 @@ class TodoService {
   final String _boxName = "todoBox";
 
   Future<Box<TodoItem>> get _box async =>
-  ait Hive.openBox<TodoItem>(_boxName);
+      await Hive.openBox<TodoItem>(_boxName);
 
   Future<void> addItem(TodoItem todoItem) async {
     var box = await _box;
